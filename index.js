@@ -1,9 +1,9 @@
 'use strict';
 
-const precinct = require('precinct');
+const precinct = require('@zhenyu925/precinct');
 const path = require('path');
 const fs = require('fs');
-const cabinet = require('filing-cabinet');
+const cabinet = require('@zhenyu925/filing-cabinet');
 const debug = require('debug')('tree');
 const Config = require('./lib/Config');
 
@@ -26,7 +26,7 @@ const Config = require('./lib/Config');
  */
 module.exports = function(options) {
   const config = new Config(options);
-
+  // 对象第一级的处理
   if (!fs.existsSync(config.filename)) {
     debug('file ' + config.filename + ' does not exist');
     return config.isListForm ? [] : {};
@@ -76,6 +76,7 @@ module.exports.toList = function(options) {
  * Returns the list of dependencies for the given filename
  *
  * Protected for testing
+ * 返回文件的浅层依赖，最核心的函数
  *
  * @param  {Config} config
  * @return {Array}
@@ -86,6 +87,7 @@ module.exports._getDependencies = function(config) {
   precinctOptions.includeCore = false;
 
   try {
+    // 获取该文件的所有的依赖，也就是初步解析important语句
     dependencies = precinct.paperwork(config.filename, precinctOptions);
 
     debug('extracted ' + dependencies.length + ' dependencies: ', dependencies);
@@ -101,7 +103,8 @@ module.exports._getDependencies = function(config) {
   for (let i = 0, l = dependencies.length; i < l; i++) {
     const dep = dependencies[i];
 
-    const result = cabinet({
+    // 返回某个依赖的实际路径
+    let opt = {
       partial: dep,
       filename: config.filename,
       directory: config.directory,
@@ -110,8 +113,14 @@ module.exports._getDependencies = function(config) {
       webpackConfig: config.webpackConfig,
       nodeModulesConfig: config.nodeModulesConfig,
       tsConfig: config.tsConfig
-    });
-
+    };
+    // 如果dep是对象，进行合并，主要用于Vue的依赖解析
+    // ast: 替换为对应的script的content或者style的content
+    // type： 增加type标识，指定dep语句的语境(js||ts||scss||sass||stylus||less||css)
+    if (typeof dep === 'object') {
+      Object.assign(opt, dep);
+    }
+    const result = cabinet(opt);
     if (!result) {
       debug('skipping an empty filepath resolution for partial: ' + dep);
       config.nonExistent.push(dep);
@@ -137,18 +146,22 @@ module.exports._getDependencies = function(config) {
  * @return {Object|Set}
  */
 function traverse(config) {
+  //从tree.js过来listFrom均为false
   let subTree = config.isListForm ? new Set() : {};
 
   debug('traversing ' + config.filename);
 
+  // 如果这个节点访问过，那么返回缓存
   if (config.visited[config.filename]) {
     debug('already visited ' + config.filename);
     return config.visited[config.filename];
   }
 
+  // 获取文件依赖
   let dependencies = module.exports._getDependencies(config);
 
   debug('cabinet-resolved all dependencies: ', dependencies);
+  // 记录缓存，防止循环依赖
   // Prevents cycles by eagerly marking the current file as read
   // so that any dependent dependencies exit
   config.visited[config.filename] = config.isListForm ? [] : {};
@@ -166,7 +179,7 @@ function traverse(config) {
     const d = dependencies[i];
     const localConfig = config.clone();
     localConfig.filename = d;
-
+    // 依赖递归生成子树
     if (localConfig.isListForm) {
       for (let item of traverse(localConfig)) {
         subTree.add(item);

@@ -1,1 +1,1 @@
-var cabinet = require('filing-cabinet');
+var cabinet = require('@zhenyu925/filing-cabinet');

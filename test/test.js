@@ -2,7 +2,7 @@ import assert from 'assert';
 import sinon from 'sinon';
 import mockfs from 'mock-fs';
 import path from 'path';
-import precinct from 'precinct';
+import precinct from '@zhenyu925/precinct';
 import rewire from 'rewire';
 import Config from '../lib/Config';
 
@@ -801,6 +801,11 @@ describe('dependencyTree', function() {
       this._root = path.join(__dirname, '../');
       this._webpackConfig = this._root + '/webpack.config.js';
 
+      console.log('vue', dependencyTree.toList({
+        filename: `${__dirname}/example/vue/main.vue`,
+        directory: this._root,
+        webpackConfig: this._webpackConfig,
+      }));
       this._testResolution = name => {
         const results = dependencyTree.toList({
           filename: `${__dirname}/example/webpack/${name}.js`,
@@ -809,7 +814,7 @@ describe('dependencyTree', function() {
           filter: filename => filename.indexOf('filing-cabinet') !== -1
         });
 
-        assert.ok(results.some(filename => filename.indexOf('node_modules/filing-cabinet') !== -1));
+        assert.ok(results.some(filename => filename.indexOf('node_modules/@zhenyu925/filing-cabinet') !== -1));
       };
     });
 

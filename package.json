@@ -1,5 +1,5 @@
 {
-  "name": "dependency-tree",
+  "name": "@zhenyu925/dependency-tree",
   "version": "7.2.0",
   "description": "Get the dependency tree of a module",
   "main": "index.js",
@@ -38,10 +38,10 @@
   },
   "homepage": "https://github.com/mrjoelkemp/node-dependency-tree",
   "dependencies": {
+    "@zhenyu925/filing-cabinet": "^2.5.1",
+    "@zhenyu925/precinct": "^6.2.0",
     "commander": "^2.19.0",
-    "debug": "^4.1.1",
-    "filing-cabinet": "^2.5.1",
-    "precinct": "^6.2.0"
+    "debug": "^4.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
