@@ -38,12 +38,14 @@
   },
   "homepage": "https://github.com/mrjoelkemp/node-dependency-tree",
   "dependencies": {
-    "@zhenyu925/filing-cabinet": "^2.5.1",
-    "@zhenyu925/precinct": "^6.2.0",
+    "@zhenyu925/filing-cabinet": "^2.5.4",
+    "@zhenyu925/precinct": "^6.2.1",
     "commander": "^2.19.0",
     "debug": "^4.1.1"
   },
   "devDependencies": {
+    "element-ui": "^2.13.0",
+    "vue": "^2.6.10",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",

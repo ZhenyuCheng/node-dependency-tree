@@ -5,6 +5,7 @@ import path from 'path';
 import precinct from '@zhenyu925/precinct';
 import rewire from 'rewire';
 import Config from '../lib/Config';
+import fs from 'fs';
 
 const dependencyTree = rewire('../');
 
@@ -801,11 +802,6 @@ describe('dependencyTree', function() {
       this._root = path.join(__dirname, '../');
       this._webpackConfig = this._root + '/webpack.config.js';
 
-      console.log('vue', dependencyTree.toList({
-        filename: `${__dirname}/example/vue/main.vue`,
-        directory: this._root,
-        webpackConfig: this._webpackConfig,
-      }));
       this._testResolution = name => {
         const results = dependencyTree.toList({
           filename: `${__dirname}/example/webpack/${name}.js`,
@@ -905,6 +901,21 @@ describe('dependencyTree', function() {
 
           assert.deepEqual(clone.detectiveConfig, detectiveConfig);
         });
+      });
+    });
+  });
+
+  describe('vue', function() {
+    it('resolves vue modules', function() {
+      this._root = path.join(__dirname, '../');
+      this._webpackConfig = this._root + '/webpack.config.js';
+
+      fs.writeFile('./test/vue.dep.json', JSON.stringify(dependencyTree({
+        filename: `${__dirname}/example/vue/main.vue`,
+        directory: this._root,
+        webpackConfig: this._webpackConfig,
+      })), (err) => {
+        console.log(err);
       });
     });
   });
