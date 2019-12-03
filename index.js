@@ -88,7 +88,7 @@ module.exports._getDependencies = function(config) {
 
   try {
     // 获取该文件的所有的依赖，也就是初步解析important语句
-    dependencies = precinct.paperwork(config.filename, precinctOptions);
+    dependencies = precinct.paperwork(config.filename, precinctOptions).filter(ele => Boolean(ele));
     // console.log(dependencies);
     debug('extracted ' + dependencies.length + ' dependencies: ', dependencies);
 
