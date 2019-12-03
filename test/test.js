@@ -909,11 +909,16 @@ describe('dependencyTree', function() {
     it('resolves vue modules', function() {
       this._root = path.join(__dirname, '../');
       this._webpackConfig = this._root + '/webpack.config.js';
+      const directory = path.join(__dirname, 'example/ts');
+
+      const tsConfigPath = path.join(directory, '.tsconfig');
 
       fs.writeFile('./test/vue.dep.json', JSON.stringify(dependencyTree({
         filename: `${__dirname}/example/vue/main.vue`,
         directory: this._root,
-        webpackConfig: this._webpackConfig,
+        // tsConfig: tsConfigPath
+
+        // webpackConfig: this._webpackConfig,
       })), (err) => {
         console.log(err);
       });

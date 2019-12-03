@@ -120,22 +120,19 @@
 </template>
 
 <script>
-// vue 
-// import Vue from 'vue';
-import './index';
-import './dir';
-// import F from 'F';
-// import ElMultiCascaderMenu from './menu';
-// import ElInput from 'element-ui/packages/input';
-// import ElTag from 'element-ui/packages/tag';
-// import Popper from 'element-ui/src/utils/vue-popper';
-// import Clickoutside from 'element-ui/src/utils/clickoutside';
-// import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
-// import emitter from 'element-ui/src/mixins/emitter';
-// import Locale from 'element-ui/src/mixins/locale';
-// import { t } from 'element-ui/src/locale';
-// import debounce from 'throttle-debounce/debounce';
-// import { generateId, escapeRegexpString, isIE, isEdge } from 'element-ui/src/utils/util';
+import Vue from 'vue';
+import F from 'F';
+import ElMultiCascaderMenu from './menu';
+import ElInput from 'element-ui/packages/input';
+import ElTag from 'element-ui/packages/tag';
+import Popper from 'element-ui/src/utils/vue-popper';
+import Clickoutside from 'element-ui/src/utils/clickoutside';
+import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
+import emitter from 'element-ui/src/mixins/emitter';
+import Locale from 'element-ui/src/mixins/locale';
+import { t } from 'element-ui/src/locale';
+import debounce from 'throttle-debounce/debounce';
+import { generateId, escapeRegexpString, isIE, isEdge } from 'element-ui/src/utils/util';
 
 const popperMixin = {
     props: {
