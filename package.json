@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/mrjoelkemp/node-dependency-tree",
   "dependencies": {
-    "@zhenyu925/filing-cabinet": "^2.5.5",
+    "@zhenyu925/filing-cabinet": "^2.5.6",
     "@zhenyu925/precinct": "^6.2.1",
     "commander": "^2.19.0",
     "debug": "^4.1.1"
